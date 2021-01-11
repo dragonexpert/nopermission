@@ -1,0 +1,3 @@
+This plugin is written by Mark Janssen.  You may not redistribute this plugin in whole or significant part without express consent of Mark Janssen. This plugin is
+designed to enhance the No Permission Error function that the MyBB Forum Software provides by giving you access to a log of events.  This plugin is free, but
+donations are appreciated if it helps you out.  Donation Link: https://www.paypal.me/MarkJanssen
