@@ -20,10 +20,10 @@ function nopermission_no_permission()
     }
 
     $no_permission = array(
-        "uid" => $mybb->user['uid'],
+        "uid" => (int) $mybb->user['uid'],
         "dateline" => TIME_NOW,
-        "file" => $file,
-        "location" => $_SERVER['REQUEST_URI']
+        "file" => $db->escape_string($file),
+        "location" => $db->escape_string($_SERVER['REQUEST_URI'])
     );
 
     $db->insert_query("nopermission", $no_permission);
