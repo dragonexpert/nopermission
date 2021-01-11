@@ -7,4 +7,4 @@ $l['nopermission_time'] = "Time";
 $l['nopermission_file'] = "File";
 $l['nopermission_url'] = "Url";
 $l['nopermission_admin_permission'] = "Can view No Permission Log";
-$l['no_permission_info_donate'] = "Donate";
+$l['nopermission_info_donate'] = "Donate";
