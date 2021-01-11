@@ -99,7 +99,7 @@ while($logitem = $db->fetch_array($query))
             $logitem['username'] .= " #" . $logitem['uid'];
         }
     }
-    $table->construct_cell(stripcslashes($logitem['username']));
+    $table->construct_cell(htmlspecialchars_uni($logitem['username']));
     $table->construct_cell($logitem['formatted_time']);
     $table->construct_cell($logitem['file']);
     $table->construct_cell("<a href='" . $logitem['location'] . "' target=_'blank'>" . $logitem['location'] . "</a>");
