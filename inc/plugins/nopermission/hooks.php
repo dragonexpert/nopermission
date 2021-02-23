@@ -23,7 +23,8 @@ function nopermission_no_permission()
         "uid" => (int) $mybb->user['uid'],
         "dateline" => TIME_NOW,
         "file" => $db->escape_string($file),
-        "location" => $db->escape_string($_SERVER['REQUEST_URI'])
+        "location" => $db->escape_string($_SERVER['REQUEST_URI']),
+        "ipaddress" => $db->escape_string(my_inet_pton(get_ip()))
     );
 
     $db->insert_query("nopermission", $no_permission);
