@@ -16,7 +16,7 @@ function nopermission_info()
         "description" => $lang->nopermission_info_description . " " . $donation_link,
         "author" => "Mark Janssen",
         "codename" => "nopermission",
-        "version" => "1.0",
+        "version" => "2.0",
         "compatibility" => "18*"
     );
 }
