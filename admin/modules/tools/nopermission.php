@@ -21,9 +21,10 @@ else
     $current_page = 1;
 }
 
+
 // How many pages are there.
-$query = $db->simple_select("nopermission", "COUNT(id) as rows");
-$rows = $db->fetch_field($query, "rows");
+$query = $db->simple_select("nopermission np", "COUNT(id) as nopermissioncount");
+$rows = $db->fetch_field($query, "nopermissioncount");
 
 $pages = ceil($rows / 50);
 
@@ -53,6 +54,9 @@ if($mybb->get_input("order_by"))
         case "file":
             $sortsql .= "np.file ASC ";
             break;
+        case "ipaddress":
+            $sortsql .= "np.ipaddress ASC";
+            break;
         default:
             $sortsql .= " np.dateline DESC ";
             break;
@@ -68,14 +72,15 @@ $query = $db->query("SELECT np.*, u.username FROM " . TABLE_PREFIX . "nopermissi
 LEFT JOIN " . TABLE_PREFIX . "users u ON(np.uid=u.uid)
 " . $sortsql . " LIMIT " . $start . ", 50");
 
-$pagination = draw_admin_pagination($current_page, 50, $pages, "index.php?module=tools-nopermission&sort_by=" . $order_by);
+$pagination = draw_admin_pagination($current_page, 50, $rows, "index.php?module=tools-nopermission&order_by=" . $sortsql);
 echo $pagination;
 
 $table = new TABLE;
 
-$table->construct_header("<a href='" . $baseurl . "&sort_by=username'>" . $lang->nopermission_username . "</a>");
-$table->construct_header("<a href='" . $baseurl . "&sort_by=time'>" . $lang->nopermission_time . "</a>");
-$table->construct_header("<a href='" . $baseurl . "&sort_by=file'>" . $lang->nopermission_file . "</a>");
+$table->construct_header("<a href='" . $baseurl . "&order_by=username'>" . $lang->nopermission_username . "</a>");
+$table->construct_header("<a href='" . $baseurl . "&order_by=time'>" . $lang->nopermission_time . "</a>");
+$table->construct_header("<a href='" . $baseurl . "&order_by=file'>" . $lang->nopermission_file . "</a>");
+$table->construct_header("<a href='" . $baseurl . "&order_by=ipaddress'>" . $lang->ipaddress . "</a>");
 $table->construct_header($lang->nopermission_url);
 $table->construct_row();
 if($db->num_rows($query) == 0)
@@ -102,6 +107,7 @@ while($logitem = $db->fetch_array($query))
     $table->construct_cell(htmlspecialchars_uni($logitem['username']));
     $table->construct_cell($logitem['formatted_time']);
     $table->construct_cell($logitem['file']);
+    $table->construct_cell(my_inet_ntop($logitem['ipaddress']));
     $table->construct_cell("<a href='" . $logitem['location'] . "' target=_'blank'>" . $logitem['location'] . "</a>");
     $table->construct_row();
 }
