@@ -10,7 +10,7 @@ function nopermission_no_permission()
 {
     global $db, $mybb;
 
-    if(defined(THIS_SCRIPT))
+    if(defined('THIS_SCRIPT'))
     {
         $file = THIS_SCRIPT;
     }
@@ -19,12 +19,14 @@ function nopermission_no_permission()
         $file = $_SERVER['PHP_SELF'];
     }
 
+    $mybb->binary_fields['nopermission'] = ['ipaddress' => true];
+
     $no_permission = array(
         "uid" => (int) $mybb->user['uid'],
         "dateline" => TIME_NOW,
         "file" => $db->escape_string($file),
         "location" => $db->escape_string($_SERVER['REQUEST_URI']),
-        "ipaddress" => $db->escape_string(my_inet_pton(get_ip()))
+        "ipaddress" => my_inet_pton(get_ip())
     );
 
     $db->insert_query("nopermission", $no_permission);
