@@ -35,7 +35,8 @@ function nopermission_is_installed()
 
 function nopermission_activate()
 {
-
+    require_once "nopermission/db.php";
+    nopermission_db_update();
 }
 
 function nopermission_deactivate()
